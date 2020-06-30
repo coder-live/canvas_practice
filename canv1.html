@@ -1,0 +1,37 @@
+<!DOCTYPE>
+<html>
+    <head>
+      <meta charset="UTF-8"/>
+      <title></title>
+  </head>
+  <body>
+    <div>练习canvas</div>
+    <canvas
+        id="myCanvas"
+        width="200"
+        height="100"
+        style="border:2px solid #000000;"
+    >
+    对不起，你的浏览器不支持canvas
+    </canvas>
+    <script>
+      let myCanvas = document.getElementById('myCanvas');
+      //获取上下文
+      let ctx = myCanvas.getContext('2d');
+      ctx.fillStyle = 'red';
+      //参数说明 x坐标, y坐标(以左上方为原点), 宽度, 高度\
+      ctx.fillRect(0, 0, 50, 50);
+      // console.log(myCanvas)
+      ctx.beginPath();
+      ctx.moveTo(10,10);
+      ctx.lineTo(100,90);
+      // closePath 闭合首位点连线;
+      ctx.lineTo(190,10);
+      ctx.closePath();
+      ctx.lineWidth= 1.0;
+      ctx.strokeStyle = '#00e';
+      ctx.stroke();
+    </script>
+  </body>
+
+</html>
