@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canv3</title>
+</head>
+<body>
+  <div>练习canvas</div>
+  <div>线条绘画补充</div>
+  <canvas
+  id="myCanvas" width="400" height="200" style="border: 2px solid #000;">
+    您的浏览器不支持canvas, 请升级浏览器
+  </canvas>
+
+  <script>
+    let myCanvas = document.getElementById('myCanvas');
+    let ctx = myCanvas.getContext('2d');
+    ctx.fillStyle= '#6f0';
+    ctx.rect(10,10,50,150);
+    ctx.fill();
+    //清楚(遮盖,背景为透明,无色) => 但不可消除边框
+    ctx.clearRect(35,35,30,30);
+
+    ctx.lineWidth = 2.0;
+    ctx.strokeStyle = '#f60'
+    //区域的边框(作为绘制的最后一道程序, 最后书写)
+    ctx.stroke();
+
+    ctx.beginPath();
+    //在开启新路径后 ==> 所设置的属性是为局部作用量, 未设置则引用外部属性
+    ctx.fillStyle= '#ff0';
+    ctx.moveTo(100,50);
+    ctx.lineTo(200,100);
+    ctx.lineTo(250,20);
+    //连接处的属性设置
+    // ctx.lineJoin = 'round';
+    //在未闭合时 端点的属性设置 ---- butt(默认) , round (多出半个圆,以自身边框长度为直径), square(半正方形)
+    ctx.lineCap = 'round';
+
+    //线条颜色
+    ctx.strokeStyle = '#6a0';
+    ctx.lineWidth = 18.0;
+    ctx.stroke();
+    //在绘制线条后  且形成了闭合区域后就可以设置区域内的填充
+    //若未闭合区域则会自动闭合所填充区域
+    //且填充区域会  索取边框的一半内容
+    ctx.fill();
+
+  </script>
+</body>
+</html>

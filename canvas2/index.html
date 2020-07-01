@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canv2</title>
+</head>
+<body>
+  <div>练习canvas</div>
+  <div>矩形绘制中的小问题</div>
+  <canvas
+  id="myCanvas" width="200" height="100" style="border: 2px solid #000;">
+    您的浏览器不支持canvas, 请升级浏览器
+  </canvas>
+
+  <script>
+    let myCanvas = document.getElementById('myCanvas');
+    let ctx = myCanvas.getContext('2d');
+    ctx.fillStyle= '#6f0';
+    // ctx.fillRect(x,y,w,h) === ctx.rect(x,y,w,h) + ctx.fill();
+    // ctx.rect(10,10,50,80);
+    // ctx.fill();
+    ctx.fillRect(10,10,50,80)
+    ctx.strokeRect(10,10,50,80);
+    //ctx.fillRect(10,10,50,80); --无效果lineWidth 及 strokeStyle
+
+    //边框的粗细
+    ctx.lineWidth = 2.0;
+    ctx.strokeStyle = '#f60'
+    //区域的边框(作为绘制的最后一道程序, 最后书写)
+    ctx.stroke();
+
+
+  </script>
+</body>
+</html>

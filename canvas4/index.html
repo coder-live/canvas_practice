@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canv3</title>
+</head>
+<body>
+  <div>练习canvas</div>
+  <div>三角函数做圆</div>
+  <canvas
+  id="myCanvas" width="400" height="200" style="border: 2px solid #000;">
+    您的浏览器不支持canvas, 请升级浏览器
+  </canvas>
+
+  <script>
+    let myCanvas = document.getElementById('myCanvas');
+    let ctx = myCanvas.getContext('2d');
+    //在绘制图形的初步操作
+    ctx.beginPath();
+    ctx.strokeStyle = 'blue';
+    //单独设置圆形偏离原来  位置
+    ctx.translate(50,0);
+    ctx.rotate(0 * Math.PI / 180);
+    //ctx.arc(x,y,r,初始角度(默认0),旋转角度,false(顺时针)/true)-->角度只识别弧度制
+        //  度数转 弧度  1度 === Math.PI / 180 弧度
+    ctx.arc(100,100,50,(90 * Math.PI / 180),(450 * Math.PI / 180),false);
+    //同上 绘制线条都 要进行 最后的步骤 绘制stroke
+    ctx.stroke();
+
+
+  </script>
+</body>
+</html>

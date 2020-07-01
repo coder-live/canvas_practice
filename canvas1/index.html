@@ -2,10 +2,11 @@
 <html>
     <head>
       <meta charset="UTF-8"/>
-      <title></title>
+      <title>canv1</title>
   </head>
   <body>
     <div>练习canvas</div>
+    <div>矩形, 三角形 的简单练习</div>
     <canvas
         id="myCanvas"
         width="200"
@@ -14,23 +15,38 @@
     >
     对不起，你的浏览器不支持canvas
     </canvas>
+
     <script>
       let myCanvas = document.getElementById('myCanvas');
       //获取上下文
       let ctx = myCanvas.getContext('2d');
+      //所绘区域背景色
       ctx.fillStyle = 'red';
       //参数说明 x坐标, y坐标(以左上方为原点), 宽度, 高度\
       ctx.fillRect(0, 0, 50, 50);
       // console.log(myCanvas)
+      
+      //结束绘制 定义属性(线条颜色, 线粗细, 背景色)
+      ctx.lineWidth= 1.0;
+      ctx.strokeStyle = '#00e';
+      ctx.stroke();
+
       ctx.beginPath();
+      ctx.moveTo(10,10);ctx.beginPath();
       ctx.moveTo(10,10);
       ctx.lineTo(100,90);
       // closePath 闭合首位点连线;
       ctx.lineTo(190,10);
       ctx.closePath();
+      ctx.lineTo(100,90);
+      // closePath 闭合首位点连线;
+      ctx.lineTo(190,10);
+      ctx.closePath();
+
       ctx.lineWidth= 1.0;
       ctx.strokeStyle = '#00e';
       ctx.stroke();
+
     </script>
   </body>
 
