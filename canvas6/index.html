@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canv6</title>
+</head>
+<body>
+  <div>练习canvas</div>
+  <div>贝塞尔曲线</div>
+  <canvas
+  id="myCanvas" width="400" height="300" style="border: 2px solid #000;">
+    您的浏览器不支持canvas, 请升级浏览器
+  </canvas>
+
+  <script>
+    /*
+    **二次贝塞尔曲线
+      ***----> 绘制原理  ----> 初始点开始,  控制点1  控制点2
+        依次连接,  两条线的形成 --> 在同一时间完成从 *起始点* 到 *第二个点* 的平均移速移动
+        而曲线的形成则在以上两个点连接形成的  *线上* 也在同一时间从第一点到第二点完成这段变速路程
+    
+    */ 
+    function draw1(){
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      ctx.beginPath();
+      ctx.strokeStyle = 'blue';
+      ctx.moveTo(50, 150);
+      let cpx1 = 150,
+          cpy1 = 50;
+      let x = 200, y = 150;
+
+      //两次
+      ctx.quadraticCurveTo(cpx1,cpy1,x,y);
+      ctx.stroke();
+
+      //修饰
+      ctx.beginPath();
+      // ctx.fillStyle= '#6f0';
+      ctx.fillRect(50, 150,10,10);
+      ctx.fillRect(cpx1, cpy1,10,10);
+      ctx.fillRect(x, y,10,10);
+    }
+    // draw1();
+
+    //三次贝塞尔曲线
+    function draw2(){
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      ctx.beginPath();
+      ctx.strokeStyle = 'blue';
+      ctx.moveTo(50, 150);
+      let cpx1 = 150,
+          cpy1 = 50;
+      let cpx2 = 250,
+          cpy2 = 100;
+      let x = 200, y = 150;
+
+      //三次
+      ctx.bezierCurveTo(cpx1,cpy1,cpx2,cpy2,x,y);
+      ctx.stroke();
+
+      //修饰
+      ctx.beginPath();
+      // ctx.fillStyle= '#6f0';
+      ctx.fillRect(50, 150,10,10);
+      ctx.fillRect(cpx1, cpy1,10,10);
+      ctx.fillRect(cpx2, cpy2,10,10);
+      ctx.fillRect(x, y,10,10);
+    }
+    draw2();
+
+  </script>
+</body>
+</html>

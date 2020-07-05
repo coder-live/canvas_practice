@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canv7</title>
+</head>
+<body>
+  <div>练习canvas</div>
+  <div>添加样式补充</div>
+  <canvas
+  id="myCanvas" width="300" height="300" style="border: 2px solid #000;">
+    您的浏览器不支持canvas, 请升级浏览器
+  </canvas>
+
+  <script>
+    /*
+    **fillStyle=x(填充颜色)  strokeStyle=x(轮廓颜色)  ->默认都是黑色
+    */ 
+    function draw1(){
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+          let rgb = `rgb(${i*42.5},${j*42.5},0)`;
+          ctx.fillStyle = rgb;
+          ctx.fillRect(i*50,j*50,50,50);
+          
+        }
+      }
+
+      // //修饰
+      // ctx.beginPath();
+      // // ctx.fillStyle= '#6f0';
+      // ctx.fillRect(50, 150,10,10);
+    }
+    // draw1();
+    function draw2(){
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+          let rgb = `rgb(${i*42.5},${j*42.5},0)`;
+          ctx.strokeStyle = rgb;
+          ctx.strokeRect(i*50,j*50,40,40);
+          
+        }
+      }
+
+      // //修饰
+      // ctx.beginPath();
+      // // ctx.fillStyle= '#6f0';
+      // ctx.fillRect(50, 150,10,10);
+    }
+    draw2();
+
+  </script>
+</body>
+</html>

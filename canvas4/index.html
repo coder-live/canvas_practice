@@ -3,31 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>canv3</title>
+  <title>canv4</title>
 </head>
 <body>
   <div>练习canvas</div>
   <div>三角函数做圆</div>
   <canvas
-  id="myCanvas" width="400" height="200" style="border: 2px solid #000;">
+  id="myCanvas" width="400" height="300" style="border: 2px solid #000;">
     您的浏览器不支持canvas, 请升级浏览器
   </canvas>
 
   <script>
-    let myCanvas = document.getElementById('myCanvas');
-    let ctx = myCanvas.getContext('2d');
-    //在绘制图形的初步操作
-    ctx.beginPath();
-    ctx.strokeStyle = 'blue';
-    //单独设置圆形偏离原来  位置
-    ctx.translate(50,0);
-    ctx.rotate(0 * Math.PI / 180);
-    //ctx.arc(x,y,r,初始角度(默认0),旋转角度,false(顺时针)/true)-->角度只识别弧度制
-        //  度数转 弧度  1度 === Math.PI / 180 弧度
-    ctx.arc(100,100,50,(90 * Math.PI / 180),(450 * Math.PI / 180),false);
-    //同上 绘制线条都 要进行 最后的步骤 绘制stroke
-    ctx.stroke();
+    function draw1() {
+      let myCanvas = document.getElementById('myCanvas');
+      let ctx = myCanvas.getContext('2d');
+      //在绘制图形的初步操作
+      ctx.beginPath();
+      ctx.strokeStyle = 'blue';
+      //单独设置圆形偏离原来  位置
+      ctx.translate(10,0);
+      //旋转,以左上角为圆心(原点)  正数 -> 顺时针
+      ctx.rotate(0 * Math.PI / 180);
+      //缩放
+      ctx.scale(1.2,1);
+      //ctx.arc(x,y,r,初始角度(默认0),旋转角度,false(顺时针)/true)-->角度只识别弧度制
+          //  度数转 弧度  1度 === Math.PI / 180 弧度
+      ctx.arc(50,60,50,(90 * Math.PI / 180),(360 * Math.PI / 180),false);
+      //同上 绘制线条都 要进行 最后的步骤 绘制stroke
+      ctx.stroke();
 
+      ctx.beginPath();
+      ctx.moveTo(150,50);
+      ctx.lineTo(200,100);
+      ctx.lineTo(150,150);
+      ctx.strokeStyle = 'red';
+      ctx.lineWidth = 2.0;
+      ctx.stroke();
+    }
+    // draw1();
+    // draw2();
+    function draw2() {
+      let myCanvas = document.getElementById('myCanvas');
+      if(!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      let w = h = 50;
+      let y = 50;
+      ctx.fillRect(10, y, w, h);
+      ctx.save();
+        //--------------保存默认样式
+      ctx.fillStyle = 'red';
+      ctx.fillRect(70, y, w, h);
+      ctx.save();
+        // --------------保存红色样式
+      ctx.fillStyle = 'blue';
+      ctx.fillRect(130, y, w, h);
+        //----------------新建样式蓝色 , 未保存//  ==> 为放出时 会继续继承上个样式
+      // ctx.save(); ---->  //  若保存当样式  -> 则放出的样式先放出之前保存的蓝色样式,
+                            //  但下次依旧会延用蓝色样式
+      ctx.restore();//-------此时放出样式蓝色, 使用红色样式
+      ctx.fillRect(190, y, w, h);
+
+      ctx.restore();//-----------默认样式黑
+      ctx.fillRect(250, y, w, h);
+
+    }
+    // 当前的状态就被推送到栈中保存。(类似数组 push)
+    // ctx.save();
+    // 每一次调用 restore 方法，上一个保存的状态就从栈中弹出，所有设定都恢复(类似数组的 pop())。
+    // ctx.restore();
+
+    //变化(偏移量)
+    function draw3() {
+      let myCanvas = document.getElementById('myCanvas');
+      if(!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      //transform(水平缩放, 水平偏移量, 垂直偏移量, 垂直缩放, 水平移动, 垂直移动)
+      ctx.transform(1, 0, 1, 1, 10, 10);
+      //先进行重置, 在进行transform操作  --> 主要第二, 三的变量操作x/y的偏移量
+      ctx.setTransform(1, 1, 0, 1, 10, 10);
+      ctx.fillRect(10, 10, 100, 100);
+    }
+    draw3();
 
   </script>
 </body>

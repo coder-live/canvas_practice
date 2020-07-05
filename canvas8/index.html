@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canv8</title>
+</head>
+<body>
+  <div>练习canvas</div>
+  <div>绘制文本</div>
+  <canvas
+  id="myCanvas" width="300" height="300" style="border: 2px solid #000;">
+    您的浏览器不支持canvas, 请升级浏览器
+  </canvas>
+
+  <script>
+    /*
+    ** fillText(text, x, y [, maxWidth]) 
+    ** strokeText(text, x, y [, maxWidth])
+    ** textAlign  文本对齐
+    ** textBaseline  基线对齐
+    ** direction   文本方向
+    */ 
+    function draw1(){
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+
+      ctx.font = "50px sans-serif";
+      ctx.fillText("天若有情", 50, 100, 200);
+      ctx.strokeText("天若有情", 50, 200);
+      ctx.textAlign = center;
+      // ctx.direction = rtl;
+
+    }
+    draw1();
+
+  </script>
+</body>
+</html>

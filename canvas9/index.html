@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canv9</title>
+</head>
+<body>
+  <div>练习canvas</div>
+  <div>绘制图片</div>
+  <div class="div">
+    <img src="../img/1.png" alt="">
+    点击图片后再尝试
+  </div>
+  <canvas
+  id="myCanvas" width="350" height="350" style="border: 2px solid #000;">
+    您的浏览器不支持canvas, 请升级浏览器
+  </canvas>
+
+  <script>
+    /*-----> 绘制图片(新建img标签图片/已存在img标签)
+    ** drawImage(image, x, y, w, h)---> 位置坐标 x, y, 长度, 宽度
+    ** ctx.drawImage(img, Ox, Oy, Ow, Oh, Nx, Ny, Nw, Nh)
+    */ 
+    function draw1(){
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      let img = new Image();
+      img.src = '../img/1.png';
+      //确保绘制时 已经加载img标签
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+      }
+    }
+    // draw1();
+    //借用真实dom-img标签再画布上绘制
+    let img = document.querySelector('div img');
+    function draw2(){
+      console.log(img);
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+
+      ctx.drawImage(img, 10, 10);//drawImage(image, x, y, w, h)
+    }
+    img.onclick = function () {
+      // draw2();
+      draw3();
+    };
+    // 切片
+    function draw3() {
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      //坐标解析--前 4 个是定义图像源的切片位置和大小，后 4 个则是定义切片的目标显示位置和大小。
+      ctx.drawImage(img, 0, 0, 100, 100, 50, 50, 200, 200);
+      //ctx.drawImage(img, Ox, Oy, Ow, Oh, Nx, Ny, Nw, Nh)
+        // => 来源图片坐标点 x, y, 原图片的 长, 宽, 创造在画布上的坐标 x, y, w, h
+    }
+  </script>
+</body>
+</html>
