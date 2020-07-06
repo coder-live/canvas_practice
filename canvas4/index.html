@@ -83,7 +83,40 @@
       ctx.setTransform(1, 1, 0, 1, 10, 10);
       ctx.fillRect(10, 10, 100, 100);
     }
-    draw3();
+    // draw3();
+    draw4();
+
+    //---------> 因rotate()旋转原点只由左上角决定
+          //---> 遂只能通过 translate(x,y) 改变原点坐标
+          //---> 再通过 fillRect(x,y,w,h)/.. 改变绘制图形的中心(-w/2,-h/2)
+    function draw4() {
+      let myCanvas = document.getElementById('myCanvas');
+      if(!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      // ctx.save();
+      ctx.translate(150,150);
+
+      ctx.fillStyle = 'red';
+      ctx.fillRect(-50,-50,100,100);
+      // ctx.restore();
+      ctx.fillStyle = 'green';
+      ctx.rotate(45*Math.PI/180);
+      ctx.fillRect(-50,-50,100,100);
+    }
+    //--------好多圆
+    // draw5();
+    // function draw5() {
+    //   let myCanvas = document.getElementById('myCanvas');
+    //   if(!myCanvas.getContext) return;
+    //   let ctx = myCanvas.getContext('2d');
+
+    //   for (var j=0;j<i*6;j++){ // draw individual dots
+    //     ctx.rotate(Math.PI*2/(i*6));
+    //     ctx.beginPath();
+    //     ctx.arc(0,i*12.5,5,0,Math.PI*2,true);
+    //     ctx.fill();
+    //   }
+    // }
 
   </script>
 </body>

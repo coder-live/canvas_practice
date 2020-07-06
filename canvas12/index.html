@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canv12</title>
+</head>
+<body>
+  <div>练习canvas</div>
+  <div>动画绘制</div>
+  <canvas
+  id="myCanvas" width="300" height="300" style="border: 2px solid #000;">
+    您的浏览器不支持canvas, 请升级浏览器
+  </canvas>
+
+  <script>
+    /*----->  setInterval()
+              setTimeout()
+              requestAnimationFrame()
+    */ 
+    let sun = new Image();
+    let moon = new Image();
+    let earth = new Image();
+    //----------------------------学习--------------------------------------
+    //初始化 开启绘制进程
+    function init(){
+      sun.src = '../img/sun.png';
+      moon.src = '../img/moon.png';
+      earth.src = '../img/earth.png';
+      window.requestAnimationFrame(draw);
+    }
+
+    //开始绘制
+    function draw() {
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+
+      ctx.globalCompositeOperation = 'destination-over';
+      ctx.clearRect(0,0,300,300); // clear canvas
+
+      ctx.fillStyle = 'rgba(0,0,0,0.4)';
+      ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+      ctx.save();
+      ctx.translate(150,150);
+
+      // Earth
+      var time = new Date();
+      ctx.rotate( ((2*Math.PI)/60)*time.getSeconds() + ((2*Math.PI)/60000)*time.getMilliseconds() );
+      ctx.translate(105,0);
+      ctx.fillRect(0,-12,50,24); // Shadow
+      ctx.drawImage(earth,-12,-12);
+
+      // Moon
+      ctx.save();
+      ctx.rotate( ((2*Math.PI)/6)*time.getSeconds() + ((2*Math.PI)/6000)*time.getMilliseconds() );
+      ctx.translate(0,28.5);
+      ctx.drawImage(moon,-3.5,-3.5);
+      ctx.restore();
+
+      ctx.restore();
+      
+      ctx.beginPath();
+      ctx.arc(150,150,105,0,Math.PI*2,false); // Earth orbit
+      ctx.stroke();
+    
+      ctx.drawImage(sun,0,0,300,300);
+
+      window.requestAnimationFrame(draw);
+    }
+
+    // init();
+
+    //-->---------------------手动练习------------------------------------------
+    function inits() {
+      sun.src = '../img/sun.png';
+      moon.src = '../img/moon.png';
+      earth.src = '../img/earth.png';
+      // window.requestAnimationFrame(draws);//-->个人不能理解,仅限于下面方案
+      sun.onload = function() {
+        draws();
+      }
+    }
+
+    function draws() {
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+      ctx.clearRect(0,0,300,300);
+      //保存初始状态-----------------------为了之后重置原点坐标
+      ctx.globalCompositeOperation = 'destination-over';
+      ctx.save();
+      //修改旋转原点为(150,150)
+      ctx.translate(150,150);
+
+      let date = new Date();
+      // //绘制地球--60秒完成一圈
+      ctx.rotate((2*Math.PI/60)*date.getSeconds()+(2*Math.PI/60000)*date.getMilliseconds());
+      // ctx.drawImage(sun,0,0);
+      //旋转后改变自身位置(原位置为自身中心)
+      ctx.translate(-105,0);
+      ctx.drawImage(earth,-12,-12);//绘制图片, 坐标
+
+      ctx.save();//保存状态(更好的理解状态的保存释放)----> 之后绘制出的图像也会随着地球一起转动
+
+      // //绘制月球---6秒一圈
+      //旋转原点为(45,150)且随之地球旋转不断变动
+      ctx.rotate((2*Math.PI/6)*date.getSeconds()+(2*Math.PI/6000)*date.getMilliseconds());
+      ctx.translate(-28,0);
+      // ctx.drawImage(sun,0,0);
+      ctx.drawImage(moon,-6,-6);
+      //释放原点改变的值, 重置0,0为原点坐标
+      ctx.restore();
+      ctx.restore();
+      //绘制太阳
+      //地球轨道
+      ctx.beginPath();
+      ctx.strokeStyle = 'skyblue';
+      ctx.arc(150,150,105,0,Math.PI*2,false);
+      ctx.stroke();
+      ctx.drawImage(sun,0,0,300,300);
+
+      window.requestAnimationFrame(draws);
+    }
+
+    inits();
+
+    </script>
+</body>
+</html>

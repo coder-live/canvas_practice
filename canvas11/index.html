@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canv11</title>
+</head>
+<body>
+  <div>练习canvas</div>
+  <div>裁剪路径</div>
+  <canvas
+  id="myCanvas" width="350" height="350" style="border: 2px solid #000;">
+    您的浏览器不支持canvas, 请升级浏览器
+  </canvas>
+
+  <script>
+    /*-----> clip()
+    ****  clip() 只能遮罩在这个方法调用之后绘制的图像
+          *******只留下裁剪内容区域
+            -->可以结合合成完成
+            -> 若是弧线, 则会连接两端形成一个区域当做截取内容
+    */ 
+    function draw1(){
+      let myCanvas = document.getElementById('myCanvas');
+      if (!myCanvas.getContext) return;
+      let ctx = myCanvas.getContext('2d');
+
+      // ctx.beginPath();
+      // ctx.arc(100,100,50,0,90*Math.PI/180,false);
+      // // ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(120,120, 100, 0, Math.PI * 1);
+      ctx.stroke();
+      ctx.clip();
+  
+      ctx.fillStyle = "pink";
+      ctx.fillRect(120, 120, 100,100);
+      
+    }
+
+    draw1();
+    </script>
+</body>
+</html>
