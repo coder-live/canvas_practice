@@ -1,1 +1,1 @@
-新人练习 canvas
+练习 canvas
