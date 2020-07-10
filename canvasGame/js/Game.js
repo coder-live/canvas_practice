@@ -10,6 +10,8 @@ class Game {
     this.scenceIndex = 0;
     // 记录帧数
     this.frame = 0;
+    //分数
+    this.score = 0;
     //赋值
     this.canvas.width = this.w;
     this.canvas.height = this.h;
@@ -67,7 +69,22 @@ class Game {
       'boom_8' : 'images/9.png',
       //结束阶段
       'game_over' : 'images/text_game_over.png',
-      'score_panel' : 'images/score_panel.png'
+      'score_panel' : 'images/score_panel.png',
+      //分数
+      'num_0' : 'images/font_0.png',
+      'num_1' : 'images/font_1.png',
+      'num_2' : 'images/font_2.png',
+      'num_3' : 'images/font_3.png',
+      'num_4' : 'images/font_4.png',
+      'num_5' : 'images/font_5.png',
+      'num_6' : 'images/font_6.png',
+      'num_7' : 'images/font_7.png',
+      'num_8' : 'images/font_8.png',
+      'num_9' : 'images/font_9.png',
+      //奖牌
+      'gold' : 'images/medals_gold.png',
+      'silver' : 'images/medals_silver.png',
+      'bronze' : 'images/medals_bronze.png'
     };
 
     let index = 0;

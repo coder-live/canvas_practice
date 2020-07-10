@@ -10,6 +10,8 @@ class ScenceControl {
       case 0://第一场景 (标题, 小鸟, 开始按键, 背景)
         // console.log(this)
         game.scenceIndex = 0;
+        game.score = 0;
+        // game = new Game();//初始所有数据
         this.titleW = game.images['title'].width;
         this.titleH = game.images['title'].height;
         this.titleY = 0;
@@ -39,6 +41,14 @@ class ScenceControl {
           game.bg = new Background();
           //将管道放在数组中保存
           game.pipeArr = [];
+          //-----------------------------------------------------
+          // 分数控制属性-------> 单独分封装在函数里
+          //  this.num = game.score.toString().length;
+          // this.numW = game.images['num_0'].width;
+          // this.scoreNums = 1;
+          // this.scoreX = (game.w - this.numW) / 2;
+          // this.scoreY = 150;
+          //----------------------------------------------------------
         break;
         case 3://第三场景 -->开始游戏(鸟, 管子, 分数)
         // --------------------------------------------
@@ -64,6 +74,9 @@ class ScenceControl {
           this.gameOverY = 0;
           this.tutX = (game.w-game.images['score_panel'].width)/2;
           this.tutY = game.h;
+          //奖牌属性  -> 将属性计算好
+          this.panelRender();
+
         break;
     }
   }
@@ -101,19 +114,19 @@ class ScenceControl {
         game.ctx.restore();
         game.ctx.drawImage(game.images['bird_0'], this.birdX, 150);
         break;
-      case 2://-------------开始游戏界面
+      case 2://-------------游戏开始界面
         //渲染背景
         game.bg.update();
         game.bg.render();
         game.bird.update();
         game.bird.render();
         //渲染管道
-        // console.log(game.frame)
         game.frame%200 == 0 ? game.pipe = new Pipe() : null;
         game.pipeArr.forEach(item => {
           item.update();
           item.render();
         });
+        this.scoreRender();
         break;
       case 3://------------ 小鸟碰撞, 爆炸界面
         //渲染背景
@@ -151,9 +164,21 @@ class ScenceControl {
         // this.gameOverY >= 150 && this.tutY <= 300 ? clearTimeout(game.time) : null;
         game.ctx.drawImage(game.images['game_over'],this.gameOverX,this.gameOverY);
         game.ctx.drawImage(game.images['score_panel'],this.tutX,this.tutY);
+        
         game.ctx.font = "15px sans-serif";
         game.ctx.fillText('任意位置重新开始',game.w/2-60,650);
-        // console.log(game.images['game_over'],this)
+        
+        //奖牌及 分数渲染
+        // return
+        // console.log(this.panel)
+        game.ctx.drawImage(game.images[this.panel],this.tutX+33,this.tutY+43);
+        //书写 分数以及 最高分数
+        game.ctx.save();
+        game.ctx.fillStyle = '#000';
+        game.ctx.font = '20px normal';
+        game.ctx.fillText(game.score,this.tutX+180,this.tutY+55);
+        game.ctx.fillText(this.best,this.tutX+180,this.tutY+100);
+        game.ctx.restore();
         break;
     }
   }
@@ -194,5 +219,35 @@ class ScenceControl {
     game.ctx.fillStyle = '#4EC0CA';
     game.ctx.fillRect(0,0,game.w,game.h - game.images['bg'].height);
     
+  }
+  scoreRender() {
+    let str = game.score.toString();
+    let numW = game.images['num_0'].width;
+    for (let i = 0,len=str.length; i < len; i++) {
+      let x = (game.w - str.length*numW) / 2 + numW*i;
+      game.ctx.drawImage(game.images['num_' + str[i]],x,100);
+    }
+  }
+  panelRender() {
+    //从浏览器中获取 分数排名数组
+    let arr = JSON.parse(window.localStorage.getItem('rank')) || [];
+    // console.log(arr)
+    if(arr[0] === undefined ? arr.push(game.score) : game.score >= arr[0]) {//第一名
+      //--> 首先判断数组第一位存不存在, 存在则比较分数, 大于它就代替, 不满足则下一判断
+      arr[0] = game.score;
+      // console.log(111)
+      //奖牌设置
+      this.panel = 'gold';
+    }else if(arr[1] === undefined ? arr.push(game.score) : game.score >= arr[1]){//第二名
+      // --> 同理: 判断第二位存不存在,不存在,这说明 不比先前数大, 就push 在其后
+      arr[1] = game.score;
+      this.panel = 'silver';
+    }else if(arr[2] === undefined ? arr.push(game.score) : game.score >= arr[2]){//第三名
+      arr[2] = game.score;
+      this.panel = 'bronze';
+    }
+    this.best = arr[0];
+    let str = JSON.stringify(arr);
+    window.localStorage.setItem('rank',str);
   }
 }
